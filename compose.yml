@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: build
+    image: gappc/tsense-frontend:latest
+    restart: unless-stopped
+    # expose:
+    #   - 3000
