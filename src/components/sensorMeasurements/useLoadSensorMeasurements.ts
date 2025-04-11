@@ -8,7 +8,7 @@ interface Measurement {
   timestamp: string
 }
 
-export const useLoadData = () => {
+export const useLoadSensorMeasurements = () => {
   const chartData = ref<ChartData<'line'>>({
     datasets: [],
   })
