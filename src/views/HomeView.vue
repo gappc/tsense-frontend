@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="flex flex-col gap-4 p-4">
     <SensorNames />
     <SensorMeasurements />
   </main>
