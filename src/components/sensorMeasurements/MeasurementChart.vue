@@ -23,14 +23,16 @@ import Zoom from 'chartjs-plugin-zoom'
 import { ref, toRefs } from 'vue'
 import { Line } from 'vue-chartjs'
 import ButtonCustom from '../buttons/ButtonCustom.vue'
+import type { MeasurementType } from './types'
 
 ChartJS.register(Title, Tooltip, Legend, LinearScale, TimeScale, PointElement, LineElement)
 
 const props = defineProps<{
   chartData: ChartData<'line'>
+  measurementType: MeasurementType
 }>()
 
-const { chartData } = toRefs(props)
+const { chartData, measurementType } = toRefs(props)
 
 // Reference for the chart instance
 const chartRef = ref<{ chart: ChartJS | null }>({ chart: null })
@@ -55,11 +57,11 @@ const chartOptions: ChartOptions<'line'> = {
       type: 'linear',
       title: {
         display: true,
-        text: 'Temperature (°C)',
+        text: measurementType.value === 'temp' ? 'Temperature (°C)' : 'Humidity (%)',
       },
       beginAtZero: true,
       ticks: {
-        callback: (value) => value + ' °C',
+        callback: (value) => value + (measurementType.value === 'temp' ? ' °C' : ' %'),
       },
     },
   },

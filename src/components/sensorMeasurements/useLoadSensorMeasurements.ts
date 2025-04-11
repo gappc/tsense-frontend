@@ -31,15 +31,16 @@ export const useLoadSensorMeasurements = () => {
 
     .then((response) => response.json())
     .then((data: { measurements: Measurement[] }) => {
-      const datasets: ChartDataset<'line'>[] = data.measurements.reduce(
+      const datasetsTemperature: ChartDataset<'line'>[] = data.measurements.reduce(
         (acc: ChartDataset<'line'>[], measurement) => {
-          const existingDataset = acc.find((dataset) => dataset.label === measurement.mac)
+          const label = `temp ${measurement.mac}`
+          const existingDataset = acc.find((dataset) => dataset.label === label)
           if (existingDataset) {
             existingDataset.data.push(toTemperaturePoint(measurement))
           } else {
             const color = macToHexColor(measurement.mac)
             acc.push({
-              label: measurement.mac,
+              label,
               backgroundColor: color,
               borderColor: color,
               data: [toTemperaturePoint(measurement)],
@@ -52,9 +53,31 @@ export const useLoadSensorMeasurements = () => {
         [],
       )
 
+      const datasetsHumidity: ChartDataset<'line'>[] = data.measurements.reduce(
+        (acc: ChartDataset<'line'>[], measurement) => {
+          const label = `hum ${measurement.mac}`
+          const existingDataset = acc.find((dataset) => dataset.label === label)
+          if (existingDataset) {
+            existingDataset.data.push(toHumidityPoint(measurement))
+          } else {
+            const color = macToHexColor(measurement.mac)
+            acc.push({
+              label,
+              backgroundColor: color,
+              borderColor: color,
+              data: [toHumidityPoint(measurement)],
+              borderWidth: 1,
+              borderDash: [2, 2],
+            })
+          }
+          return acc
+        },
+        [],
+      )
+
       chartData.value = {
         ...chartData.value,
-        datasets,
+        datasets: [...datasetsTemperature, ...datasetsHumidity],
       }
     })
     .catch((error) => {
@@ -72,4 +95,9 @@ export const useLoadSensorMeasurements = () => {
 const toTemperaturePoint = (measurement: Measurement): Point => ({
   x: new Date(measurement.timestamp).getTime(),
   y: measurement.t,
+})
+
+const toHumidityPoint = (measurement: Measurement): Point => ({
+  x: new Date(measurement.timestamp).getTime(),
+  y: measurement.h,
 })
