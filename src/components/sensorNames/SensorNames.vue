@@ -1,13 +1,23 @@
 <template>
   <div>
-    <div>
+    <div class="flex items-center gap-3">
       <span>Sensor Names</span>
-      <button @click="showNames = !showNames">
-        {{ showNames ? 'Hide' : 'Show' }} Sensor Names
+      <button
+        class="flex size-6 cursor-pointer items-center justify-center rounded border bg-gray-500 text-white hover:bg-gray-600"
+        @click="showNames = !showNames"
+      >
+        {{ showNames ? '-' : '+' }}
       </button>
     </div>
     <ul v-if="showNames && loaded && error == null">
-      <li v-for="(name, mac) in sensorNames" :key="mac">{{ name }} ({{ mac }})</li>
+      <li
+        v-for="(name, mac) in sensorNames"
+        class="p-2"
+        :style="`background: ${macToHexColor(mac)}`"
+        :key="mac"
+      >
+        <span>{{ name }} ({{ mac }})</span>
+      </li>
     </ul>
 
     <div v-if="loading">Loading...</div>
@@ -19,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+import { macToHexColor } from '@/utils/colorUtils'
 import { ref } from 'vue'
 import { useLoadSensorNames } from './useLoadSensorNames'
 

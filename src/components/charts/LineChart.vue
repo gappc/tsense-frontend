@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="resetZoom">Reset Zoom</button>
+    <ButtonCustom @click="resetZoom">Reset Zoom</ButtonCustom>
     <Line ref="chartRef" :plugins="[Zoom]" :options="chartOptions" :data="chartData" />
   </div>
 </template>
@@ -22,6 +22,7 @@ import 'chartjs-adapter-date-fns'
 import Zoom from 'chartjs-plugin-zoom'
 import { ref, toRefs } from 'vue'
 import { Line } from 'vue-chartjs'
+import ButtonCustom from '../buttons/ButtonCustom.vue'
 
 ChartJS.register(Title, Tooltip, Legend, LinearScale, TimeScale, PointElement, LineElement)
 
