@@ -69,7 +69,9 @@ const chartOptions: ChartOptions<'line'> = {
     tooltip: {
       callbacks: {
         label: (context) => {
-          return `Temperature: ${context.parsed.y.toFixed(1)}°C`
+          return measurementType.value === 'temp'
+            ? `Temperature: ${context.parsed.y.toFixed(1)}°C`
+            : `Humidity: ${context.parsed.y.toFixed(0)}%`
         },
       },
     },
