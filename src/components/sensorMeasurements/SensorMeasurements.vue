@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LineChart v-if="loaded && error == null" :chartData="chartData" />
+    <LineChart v-if="loaded && error == null" class="pl-8" :chartData="chartData" />
     <div v-else-if="loading">Loading...</div>
     <div v-else-if="error">
       <p>{{ error }}</p>
