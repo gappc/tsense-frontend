@@ -39,6 +39,10 @@ const chartOptions: ChartOptions<'line'> = {
   scales: {
     x: {
       type: 'time',
+      title: {
+        display: true,
+        text: 'Date',
+      },
       time: {
         unit: 'day',
         displayFormats: {
@@ -46,8 +50,26 @@ const chartOptions: ChartOptions<'line'> = {
         },
       },
     },
+    y: {
+      type: 'linear',
+      title: {
+        display: true,
+        text: 'Temperature (°C)',
+      },
+      beginAtZero: true,
+      ticks: {
+        callback: (value) => value + ' °C',
+      },
+    },
   },
   plugins: {
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          return `Temperature: ${context.parsed.y.toFixed(1)}°C`
+        },
+      },
+    },
     zoom: {
       pan: {
         enabled: true,
