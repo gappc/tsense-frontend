@@ -1,7 +1,7 @@
 <template>
   <div>
     <ButtonCustom @click="resetZoom">Reset Zoom</ButtonCustom>
-    <CustomLineChart ref="chartRef" :plugins="[Zoom]" :options="chartOptions" :data="chartData" />
+    <Line ref="chartRef" :plugins="[Zoom]" :options="chartOptions" :data="chartData" />
   </div>
 </template>
 
@@ -21,18 +21,11 @@ import {
 import 'chartjs-adapter-date-fns'
 import Zoom from 'chartjs-plugin-zoom'
 import { ref, toRefs } from 'vue'
-import { createTypedChart } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 import ButtonCustom from '../buttons/ButtonCustom.vue'
 import type { MeasurementType } from './types'
 
 ChartJS.register(Title, Tooltip, Legend, LinearScale, TimeScale, PointElement, LineElement)
-
-// Define a custom chart type for line charts. This allows us to define custom types for the data.
-// At the moment, we are just reusing the default line chart types, but we could extend them in the future.
-const CustomLineChart = createTypedChart<'line', (number | { x: number; y: number } | null)[]>(
-  'line',
-  LineElement,
-)
 
 const props = defineProps<{
   chartData: ChartData<'line'>
