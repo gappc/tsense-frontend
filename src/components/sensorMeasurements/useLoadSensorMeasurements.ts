@@ -18,7 +18,7 @@ export const useLoadSensorMeasurements = () => {
   const loaded = ref(false)
   const error = ref<string | null>(null)
 
-  fetch('https://tsense.gappc.net/api/measurements?limit=2000', {
+  fetch('https://tsense.gappc.net/api/measurements?limit=200000', {
     credentials: 'include',
     mode: 'cors',
   })
