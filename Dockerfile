@@ -21,4 +21,5 @@ RUN npm run build
 # Production image
 FROM joseluisq/static-web-server:2-alpine as build
 
+ENV SERVER_ROOT=/public
 COPY --from=builder /app/dist /public
